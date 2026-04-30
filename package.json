@@ -1,0 +1,17 @@
+{
+  "name": "fluvio",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "yarn@4.13.0",
+  "devDependencies": {
+    "turbo": "^2.8.17"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint"
+  }
+}
