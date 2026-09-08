@@ -15,3 +15,10 @@ node_modules
 
 #!.yarn/cache
 .pnp.*
+
+**/.env
+
+*storybook.log
+storybook-static
+
+.turbo
