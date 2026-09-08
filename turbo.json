@@ -15,9 +15,7 @@
       "cache": false,
       "persistent": true
     },
-    "lint": {}
-  },
-  "pipeline": {
+    "lint": {},
     "storybook": {
       "cache": false,
       "persistent": true
