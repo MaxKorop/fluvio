@@ -1,0 +1,30 @@
+"area: web":
+  - changed-files:
+      - any-glob-to-any-file: "apps/web/**"
+
+"area: api-gateway":
+  - changed-files:
+      - any-glob-to-any-file: "apps/api-gateway/**"
+
+"area: user-svc":
+  - changed-files:
+      - any-glob-to-any-file: "apps/user-svc/**"
+
+"area: transaction-svc":
+  - changed-files:
+      - any-glob-to-any-file: "apps/transaction-svc/**"
+
+"area: ui":
+  - changed-files:
+      - any-glob-to-any-file: "packages/ui/**"
+
+"tooling":
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+          - ".husky/**"
+          - "scripts/**"
+          - "package.json"
+          - "turbo.json"
+          - "commitlint.config.mjs"
+          - "workflow.config.json"
