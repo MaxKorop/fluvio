@@ -7,12 +7,18 @@
   ],
   "packageManager": "yarn@4.13.0",
   "devDependencies": {
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.0",
     "turbo": "^2.8.17",
     "vite": "^8.2.1"
   },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "lint:branch": "node scripts/lint-branch.mjs",
+    "prepare": "husky"
   }
 }

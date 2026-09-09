@@ -1,0 +1,42 @@
+name: 🛠️ Task / Maintenance
+description: Track internal engineering tasks, refactors, or tooling improvements
+title: "[Task]: "
+labels: ["chore"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for maintenance, refactoring, dependency upgrades, or CI/CD tasks.
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Target Package / Service
+      description: Where is this task focused?
+      options:
+        - apps/web
+        - apps/api-gateway
+        - apps/user-svc
+        - apps/transaction-svc
+        - packages/ui
+        - Root / Tooling / CI
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Task Description
+      description: Describe what needs to be done.
+      placeholder: Detailed description of work items...
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Checklists or criteria required to consider this task complete.
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
