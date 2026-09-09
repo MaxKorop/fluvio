@@ -8,7 +8,20 @@ if (!msgFile) {
   process.exit(0);
 }
 
+function loadWorkflowConfig() {
+  try {
+    const raw = readFileSync(new URL('../workflow.config.json', import.meta.url), 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return { issuePrefix: 'fl', issueSeparator: '#', allowSpaceBeforeHash: true };
+  }
+}
+
 try {
+  const config = loadWorkflowConfig();
+  const prefix = config.issuePrefix || 'fl';
+  const sep = config.issueSeparator || '#';
+
   const branch = execSync('git rev-parse --abbrev-ref HEAD', {
     encoding: 'utf8',
     stdio: ['pipe', 'pipe', 'ignore']
@@ -23,14 +36,16 @@ try {
   const issueNumber = match[1];
   const content = readFileSync(msgFile, 'utf8');
 
-  // If already tagged with fm#<number> or if it's a merge/revert, skip
-  if (/fm#\d+/i.test(content) || /^Merge /i.test(content) || /^Revert /i.test(content)) {
+  // If already tagged with fl#<number> or fl #<number> or if it's a merge/revert, skip
+  const tagRegex = new RegExp(`\\b${prefix}\\s*\\${sep}\\d+`, 'i');
+  if (tagRegex.test(content) || /^Merge /i.test(content) || /^Revert /i.test(content)) {
     process.exit(0);
   }
 
   const lines = content.split('\n');
   if (lines.length > 0 && lines[0].trim().length > 0) {
-    lines[0] = `${lines[0].trimEnd()} fm#${issueNumber}`;
+    const tag = config.allowSpaceBeforeHash ? `${prefix} ${sep}${issueNumber}` : `${prefix}${sep}${issueNumber}`;
+    lines[0] = `${lines[0].trimEnd()} ${tag}`;
     writeFileSync(msgFile, lines.join('\n'), 'utf8');
   }
 } catch {

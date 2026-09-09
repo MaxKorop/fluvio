@@ -27,3 +27,4 @@
           - "package.json"
           - "turbo.json"
           - "commitlint.config.mjs"
+          - "workflow.config.json"

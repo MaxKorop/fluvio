@@ -1,4 +1,21 @@
-const ISSUE_TAG_REGEX = /\bfm#\d+$/;
+import fs from 'node:fs';
+
+function loadWorkflowConfig() {
+  try {
+    const raw = fs.readFileSync(new URL('./workflow.config.json', import.meta.url), 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return { issuePrefix: 'fl', issueSeparator: '#' };
+  }
+}
+
+const workflowConfig = loadWorkflowConfig();
+const prefix = workflowConfig.issuePrefix || 'fl';
+const sep = workflowConfig.issueSeparator || '#';
+
+// Matches both "fl#12" and "fl #12"
+// (A space before # allows GitHub PR titles to automatically link to the current repo's issue)
+const ISSUE_TAG_REGEX = new RegExp(`\\b${prefix}\\s*\\${sep}\\d+$`);
 
 export default {
   extends: ['@commitlint/config-conventional'],
@@ -13,7 +30,7 @@ export default {
           const isValid = ISSUE_TAG_REGEX.test(trimmed);
           return [
             isValid,
-            'Commit header must end with a project issue tag in format "fm#<issue-number>" (e.g. "feat: add login flow fm#12" or "chore(ci): update workflow fm#2")'
+            `Commit header must end with an issue tag in format "${prefix}${sep}<issue-number>" (e.g. "feat: add login flow ${prefix}${sep}12" or "chore: setup linters ${prefix} ${sep}2")`
           ];
         }
       }
