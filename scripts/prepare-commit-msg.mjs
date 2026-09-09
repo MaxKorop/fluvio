@@ -13,7 +13,7 @@ function loadWorkflowConfig() {
     const raw = readFileSync(new URL('../workflow.config.json', import.meta.url), 'utf8');
     return JSON.parse(raw);
   } catch {
-    return { issuePrefix: 'fl', issueSeparator: '#', allowSpaceBeforeHash: true };
+    return { issuePrefix: 'fl', issueSeparator: '#' };
   }
 }
 
@@ -36,15 +36,15 @@ try {
   const issueNumber = match[1];
   const content = readFileSync(msgFile, 'utf8');
 
-  // If already tagged with fl#<number> or fl #<number> or if it's a merge/revert, skip
-  const tagRegex = new RegExp(`\\b${prefix}\\s*\\${sep}\\d+`, 'i');
+  // If already tagged with fl#<number> or if it's a merge/revert, skip
+  const tagRegex = new RegExp(`\\b${prefix}\\${sep}\\d+`, 'i');
   if (tagRegex.test(content) || /^Merge /i.test(content) || /^Revert /i.test(content)) {
     process.exit(0);
   }
 
   const lines = content.split('\n');
   if (lines.length > 0 && lines[0].trim().length > 0) {
-    const tag = config.allowSpaceBeforeHash ? `${prefix} ${sep}${issueNumber}` : `${prefix}${sep}${issueNumber}`;
+    const tag = `${prefix}${sep}${issueNumber}`;
     lines[0] = `${lines[0].trimEnd()} ${tag}`;
     writeFileSync(msgFile, lines.join('\n'), 'utf8');
   }

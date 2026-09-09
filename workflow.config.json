@@ -2,7 +2,6 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "issuePrefix": "fl",
   "issueSeparator": "#",
-  "allowSpaceBeforeHash": true,
   "branchTypes": [
     "feat",
     "fix",
